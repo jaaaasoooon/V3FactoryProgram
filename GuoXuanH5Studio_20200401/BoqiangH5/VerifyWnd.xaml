@@ -1,0 +1,24 @@
+﻿<Window x:Class="BoqiangH5.VerifyWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BoqiangH5"
+        mc:Ignorable="d"
+        Title="密码验证" Height="100" Width="240" WindowStyle="None" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="密码：" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+        <TextBox Name="tbPassword" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" Height="30" VerticalContentAlignment="Center"></TextBox>
+        <Button Name="btnOK" Content="确定" Grid.Row="1" Grid.Column="1" Margin="5" Height="30" Click="btnOK_Click"></Button>
+        <Button Name="btnCancel" Content="取消" Grid.Row="1" Grid.Column="2" Margin="5" Height="30" Click="btnCancel_Click"></Button>
+    </Grid>
+</Window>

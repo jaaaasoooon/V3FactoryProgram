@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="V3ModelStoreContainer" CdmEntityContainer="V3Entities">
+    <EntitySetMapping Name="operation">
+      <EntityTypeMapping TypeName="V3Model.operation">
+        <MappingFragment StoreEntitySet="operation">
+          <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="repair">
+      <EntityTypeMapping TypeName="V3Model.repair">
+        <MappingFragment StoreEntitySet="repair">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="RepairResultID" ColumnName="RepairResultID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="result">
+      <EntityTypeMapping TypeName="V3Model.result">
+        <MappingFragment StoreEntitySet="result">
+          <ScalarProperty Name="ResultID" ColumnName="ResultID" />
+          <ScalarProperty Name="Result1" ColumnName="Result1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userrole">
+      <EntityTypeMapping TypeName="V3Model.userrole">
+        <MappingFragment StoreEntitySet="userrole">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="V3Model.users">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="IsInit" ColumnName="IsInit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="repairmethod">
+      <EntityTypeMapping TypeName="V3Model.repairmethod">
+        <MappingFragment StoreEntitySet="repairmethod">
+          <ScalarProperty Name="RepairMethods" ColumnName="RepairMethods" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="repairreason">
+      <EntityTypeMapping TypeName="V3Model.repairreason">
+        <MappingFragment StoreEntitySet="repairreason">
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="repairresult">
+      <EntityTypeMapping TypeName="V3Model.repairresult">
+        <MappingFragment StoreEntitySet="repairresult">
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="RepairResultID" ColumnName="RepairResultID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uidrecord">
+      <EntityTypeMapping TypeName="V3Model.uidrecord">
+        <MappingFragment StoreEntitySet="uidrecord">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+          <ScalarProperty Name="BMSID" ColumnName="BMSID" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="operationrecord">
+      <EntityTypeMapping TypeName="V3Model.operationrecord">
+        <MappingFragment StoreEntitySet="operationrecord">
+          <ScalarProperty Name="AdjustCurrentVal" ColumnName="AdjustCurrentVal" />
+          <ScalarProperty Name="Pre_AdjustCurrentVal" ColumnName="Pre_AdjustCurrentVal" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Humidity" ColumnName="Humidity" />
+          <ScalarProperty Name="CellTemp" ColumnName="CellTemp" />
+          <ScalarProperty Name="AmbientTemp" ColumnName="AmbientTemp" />
+          <ScalarProperty Name="CellVoltage" ColumnName="CellVoltage" />
+          <ScalarProperty Name="Current" ColumnName="Current" />
+          <ScalarProperty Name="TotalVoltage" ColumnName="TotalVoltage" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+          <ScalarProperty Name="LoopNumber" ColumnName="LoopNumber" />
+          <ScalarProperty Name="MCUCheckTime" ColumnName="MCUCheckTime" />
+          <ScalarProperty Name="ResultID" ColumnName="ResultID" />
+          <ScalarProperty Name="RTC" ColumnName="RTC" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

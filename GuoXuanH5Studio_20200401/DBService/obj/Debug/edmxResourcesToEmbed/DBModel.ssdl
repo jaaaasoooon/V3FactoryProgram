@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="V3Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="operation">
+    <Key>
+      <PropertyRef Name="OperationID" />
+    </Key>
+    <Property Name="OperationID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="operationrecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UID" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="ModifiedTime" Type="timestamp" Precision="0" Nullable="false" />
+    <Property Name="Data" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="RTC" Type="timestamp" Precision="0" />
+    <Property Name="ResultID" Type="int" Nullable="false" />
+    <Property Name="MCUCheckTime" Type="timestamp" Precision="0" />
+    <Property Name="LoopNumber" Type="int" Nullable="false" />
+    <Property Name="OperationID" Type="smallint" Nullable="false" />
+    <Property Name="Comments" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="TotalVoltage" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Current" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CellVoltage" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="AmbientTemp" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CellTemp" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Humidity" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Pre_AdjustCurrentVal" Type="varchar" MaxLength="10" />
+    <Property Name="AdjustCurrentVal" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="repair">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UID" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="ModifiedTime" Type="timestamp" Precision="0" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Comment" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="RepairResultID" Type="smallint" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="repairmethod">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepairMethods" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="repairreason">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Reason" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="repairresult">
+    <Key>
+      <PropertyRef Name="RepairResultID" />
+    </Key>
+    <Property Name="RepairResultID" Type="smallint" Nullable="false" />
+    <Property Name="Result" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="result">
+    <Key>
+      <PropertyRef Name="ResultID" />
+    </Key>
+    <Property Name="ResultID" Type="int" Nullable="false" />
+    <Property Name="Result1" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="uidrecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="BMSID" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedTime" Type="timestamp" Precision="0" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userrole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="IsInit" Type="bool" Nullable="false" />
+  </EntityType>
+  <Association Name="operation_operationrecord">
+    <End Role="operation" Type="Self.operation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="operationrecord" Type="Self.operationrecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="operation">
+        <PropertyRef Name="OperationID" />
+      </Principal>
+      <Dependent Role="operationrecord">
+        <PropertyRef Name="OperationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="repairresult_repair">
+    <End Role="repairresult" Type="Self.repairresult" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="repair" Type="Self.repair" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="repairresult">
+        <PropertyRef Name="RepairResultID" />
+      </Principal>
+      <Dependent Role="repair">
+        <PropertyRef Name="RepairResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="result_operationrecord">
+    <End Role="result" Type="Self.result" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="operationrecord" Type="Self.operationrecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="result">
+        <PropertyRef Name="ResultID" />
+      </Principal>
+      <Dependent Role="operationrecord">
+        <PropertyRef Name="ResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="users_operationtype">
+    <End Role="users" Type="Self.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="operationrecord" Type="Self.operationrecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="operationrecord">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="users_userrole">
+    <End Role="userrole" Type="Self.userrole" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userrole">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="V3ModelStoreContainer">
+    <EntitySet Name="operation" EntityType="Self.operation" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="operationrecord" EntityType="Self.operationrecord" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="repair" EntityType="Self.repair" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="repairmethod" EntityType="Self.repairmethod" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="repairreason" EntityType="Self.repairreason" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="repairresult" EntityType="Self.repairresult" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="result" EntityType="Self.result" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="uidrecord" EntityType="Self.uidrecord" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="userrole" EntityType="Self.userrole" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="v3" store:Type="Tables" />
+    <AssociationSet Name="operation_operationrecord" Association="Self.operation_operationrecord">
+      <End Role="operation" EntitySet="operation" />
+      <End Role="operationrecord" EntitySet="operationrecord" />
+    </AssociationSet>
+    <AssociationSet Name="repairresult_repair" Association="Self.repairresult_repair">
+      <End Role="repairresult" EntitySet="repairresult" />
+      <End Role="repair" EntitySet="repair" />
+    </AssociationSet>
+    <AssociationSet Name="result_operationrecord" Association="Self.result_operationrecord">
+      <End Role="result" EntitySet="result" />
+      <End Role="operationrecord" EntitySet="operationrecord" />
+    </AssociationSet>
+    <AssociationSet Name="users_operationtype" Association="Self.users_operationtype">
+      <End Role="users" EntitySet="users" />
+      <End Role="operationrecord" EntitySet="operationrecord" />
+    </AssociationSet>
+    <AssociationSet Name="users_userrole" Association="Self.users_userrole">
+      <End Role="userrole" EntitySet="userrole" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

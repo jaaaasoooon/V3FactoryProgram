@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="V3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="operation">
+    <Key>
+      <PropertyRef Name="OperationID" />
+    </Key>
+    <Property Name="OperationID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="operationrecord" Relationship="V3Model.operation_operationrecord" FromRole="operation" ToRole="operationrecord" />
+  </EntityType>
+  <EntityType Name="repair">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UID" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifiedTime" Type="DateTime" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RepairResultID" Type="Int16" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="repairresult" Relationship="V3Model.repairresult_repair" FromRole="repair" ToRole="repairresult" />
+  </EntityType>
+  <EntityType Name="result">
+    <Key>
+      <PropertyRef Name="ResultID" />
+    </Key>
+    <Property Name="ResultID" Type="Int32" Nullable="false" />
+    <Property Name="Result1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="operationrecord" Relationship="V3Model.result_operationrecord" FromRole="result" ToRole="operationrecord" />
+  </EntityType>
+  <EntityType Name="userrole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="users" Relationship="Self.users_userrole" FromRole="userrole" ToRole="users" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="IsInit" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="userrole" Relationship="Self.users_userrole" FromRole="users" ToRole="userrole" />
+    <NavigationProperty Name="operationrecord" Relationship="V3Model.users_operationtype" FromRole="users" ToRole="operationrecord" />
+  </EntityType>
+  <Association Name="users_userrole">
+    <End Role="userrole" Type="Self.userrole" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userrole">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="V3Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="operation" EntityType="Self.operation" />
+    <EntitySet Name="repair" EntityType="Self.repair" />
+    <EntitySet Name="result" EntityType="Self.result" />
+    <EntitySet Name="userrole" EntityType="Self.userrole" />
+    <EntitySet Name="users" EntityType="Self.users" />
+    <AssociationSet Name="users_userrole" Association="Self.users_userrole">
+      <End Role="userrole" EntitySet="userrole" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+    <EntitySet Name="repairmethod" EntityType="V3Model.repairmethod" />
+    <EntitySet Name="repairreason" EntityType="V3Model.repairreason" />
+    <EntitySet Name="repairresult" EntityType="V3Model.repairresult" />
+    <AssociationSet Name="repairresult_repair" Association="V3Model.repairresult_repair">
+      <End Role="repairresult" EntitySet="repairresult" />
+      <End Role="repair" EntitySet="repair" />
+    </AssociationSet>
+    <EntitySet Name="uidrecord" EntityType="V3Model.uidrecord" />
+    <EntitySet Name="operationrecord" EntityType="V3Model.operationrecord" />
+    <AssociationSet Name="operation_operationrecord" Association="V3Model.operation_operationrecord">
+      <End Role="operation" EntitySet="operation" />
+      <End Role="operationrecord" EntitySet="operationrecord" />
+    </AssociationSet>
+    <AssociationSet Name="result_operationrecord" Association="V3Model.result_operationrecord">
+      <End Role="result" EntitySet="result" />
+      <End Role="operationrecord" EntitySet="operationrecord" />
+    </AssociationSet>
+    <AssociationSet Name="users_operationtype" Association="V3Model.users_operationtype">
+      <End Role="users" EntitySet="users" />
+      <End Role="operationrecord" EntitySet="operationrecord" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="repairmethod">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepairMethods" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="repairreason">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Reason" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="repairresult">
+    <Key>
+      <PropertyRef Name="RepairResultID" />
+    </Key>
+    <Property Name="RepairResultID" Type="Int16" Nullable="false" />
+    <Property Name="Result" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="repair" Relationship="V3Model.repairresult_repair" FromRole="repairresult" ToRole="repair" />
+  </EntityType>
+  <Association Name="repairresult_repair">
+    <End Type="V3Model.repairresult" Role="repairresult" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="V3Model.repair" Role="repair" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="repairresult">
+        <PropertyRef Name="RepairResultID" />
+      </Principal>
+      <Dependent Role="repair">
+        <PropertyRef Name="RepairResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="uidrecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BMSID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedTime" Type="DateTime" Nullable="false" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="operationrecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UID" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedTime" Type="DateTime" Nullable="false" />
+    <Property Name="Data" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RTC" Type="DateTime" />
+    <Property Name="ResultID" Type="Int32" Nullable="false" />
+    <Property Name="MCUCheckTime" Type="DateTime" />
+    <Property Name="LoopNumber" Type="Int32" Nullable="false" />
+    <Property Name="OperationID" Type="Int16" Nullable="false" />
+    <Property Name="Comments" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="TotalVoltage" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Current" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CellVoltage" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AmbientTemp" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CellTemp" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Humidity" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Pre_AdjustCurrentVal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="AdjustCurrentVal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="operation" Relationship="V3Model.operation_operationrecord" FromRole="operationrecord" ToRole="operation" />
+    <NavigationProperty Name="result" Relationship="V3Model.result_operationrecord" FromRole="operationrecord" ToRole="result" />
+    <NavigationProperty Name="users" Relationship="V3Model.users_operationtype" FromRole="operationrecord" ToRole="users" />
+  </EntityType>
+  <Association Name="operation_operationrecord">
+    <End Type="V3Model.operation" Role="operation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="V3Model.operationrecord" Role="operationrecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="operation">
+        <PropertyRef Name="OperationID" />
+      </Principal>
+      <Dependent Role="operationrecord">
+        <PropertyRef Name="OperationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="result_operationrecord">
+    <End Type="V3Model.result" Role="result" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="V3Model.operationrecord" Role="operationrecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="result">
+        <PropertyRef Name="ResultID" />
+      </Principal>
+      <Dependent Role="operationrecord">
+        <PropertyRef Name="ResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="users_operationtype">
+    <End Type="V3Model.users" Role="users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="V3Model.operationrecord" Role="operationrecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="operationrecord">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
