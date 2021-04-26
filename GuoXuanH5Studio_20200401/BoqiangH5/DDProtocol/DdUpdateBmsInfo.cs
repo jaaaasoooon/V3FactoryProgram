@@ -16,7 +16,7 @@ namespace BoqiangH5
         static SolidColorBrush brushYellow = new SolidColorBrush(Colors.Yellow);
         public void DdProtocolUpdateBmsInfo(List<byte> listRecv)
         {
-            if (listRecv.Count < 0xD5 || listRecv[1] != 0xD2)
+            if (listRecv.Count < 0xDD || listRecv[1] != 0xDA)
             {
                 return;
             }
@@ -236,6 +236,9 @@ namespace BoqiangH5
                         case "06":
                             ListBmsInfo[nUiIndex].StrValue = status + " 停车桩状态";
                             break;
+                        case "07":
+                            ListBmsInfo[nUiIndex].StrValue = status + " 禁止充电状态";
+                            break;
                         default:
                             ListBmsInfo[nUiIndex].StrValue = status;
                             break;
@@ -264,6 +267,23 @@ namespace BoqiangH5
                     else
                         ListBmsInfo[nUiIndex].StrValue = "未启动";
                     break;
+                case 0xA269:
+                    string eventStr = string.Empty;
+                    int _val = listRecv[nByteIndex_1] & 0x03;
+                    if (_val == 0) eventStr = "无故障";
+                    else if (_val == 1) eventStr = "有跌落无碰撞";
+                    else if (_val == 2) eventStr = "跌落碰撞";
+                    else eventStr = _val.ToString();
+                    eventStr += ",";
+                    int _bit2 = listRecv[nByteIndex_1] & 0x04;
+                    if (_bit2 == 0) eventStr += "跌落检测开关关闭";
+                    else if (_bit2 == 1) eventStr += "跌落检测开关开启";
+                    else eventStr += _bit2.ToString();
+
+                    ListBmsInfo[nUiIndex].StrValue = eventStr;
+                    ListBmsInfo[nUiIndex + 1].StrValue = listRecv[nByteIndex_1 + 1].ToString();
+                    nUiIndex++;
+                    break;
                 default:
                     ListBmsInfo[nUiIndex].StrValue = ((listRecv[nByteIndex_1] << 8) | listRecv[nByteIndex_1 + 1]).ToString();
                     break;
@@ -284,6 +304,10 @@ namespace BoqiangH5
                 case 0xA25C:
                     ListBmsInfo[nUiIndex].StrValue = ((UInt16)nRegister).ToString();
 
+                    break;
+                case 0xA26A:
+                    TimeSpan ts = new TimeSpan((long)(nRegister * Math.Pow(10, 7)));
+                    ListBmsInfo[nUiIndex].StrValue = (new DateTime(1970, 1, 1, 8, 0, 0) + ts).ToString("yyyy/MM/dd HH:mm:ss");
                     break;
                 default:    
                     ListBmsInfo[nUiIndex].StrValue = ((UInt32)nRegister).ToString();
