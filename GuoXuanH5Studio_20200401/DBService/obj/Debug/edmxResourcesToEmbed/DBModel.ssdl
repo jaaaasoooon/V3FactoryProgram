@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="V3Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="DBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="operation">
     <Key>
       <PropertyRef Name="OperationID" />
@@ -168,7 +168,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="V3ModelStoreContainer">
+  <EntityContainer Name="DBModelStoreContainer">
     <EntitySet Name="operation" EntityType="Self.operation" Schema="v3" store:Type="Tables" />
     <EntitySet Name="operationrecord" EntityType="Self.operationrecord" Schema="v3" store:Type="Tables" />
     <EntitySet Name="repair" EntityType="Self.repair" Schema="v3" store:Type="Tables" />

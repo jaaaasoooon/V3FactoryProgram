@@ -26,8 +26,8 @@ namespace DBService
         public int RoleID { get; set; }
         public bool IsInit { get; set; }
     
-        public virtual userrole userrole { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<operationrecord> operationrecord { get; set; }
+        public virtual userrole userrole { get; set; }
     }
 }

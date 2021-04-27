@@ -13,6 +13,7 @@ using System.IO.Ports;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.NetworkInformation;
 
 namespace BoqiangH5
 {
@@ -62,6 +63,16 @@ namespace BoqiangH5
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            string Mac;
+            if(!GetLocalMac(out Mac))
+            {
+                MessageBox.Show("获取本机MAC地址失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            else
+            {
+
+            }
             ////全局异常捕捉
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
@@ -1180,5 +1191,39 @@ namespace BoqiangH5
         //{
         //    this.Close();
         //}
+
+        public bool GetLocalMac(out string mac)
+        {
+            mac = string.Empty;
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            foreach(NetworkInterface adapter in nics)
+            {
+                IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
+                UnicastIPAddressInformationCollection allAddress = adapterProperties.UnicastAddresses;
+                if(allAddress.Count > 0)
+                {
+                    if(adapter.OperationalStatus == OperationalStatus.Up)
+                    {
+                        mac = adapter.GetPhysicalAddress().ToString();
+                        break;
+                    }
+                }
+            }
+            if(!string.IsNullOrWhiteSpace(mac))
+            {
+                if (mac.Length == 12)
+                {
+                    mac = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2),
+                        mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2));
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

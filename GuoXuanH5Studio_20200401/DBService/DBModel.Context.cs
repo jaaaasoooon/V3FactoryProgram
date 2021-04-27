@@ -26,14 +26,14 @@ namespace DBService
         }
     
         public virtual DbSet<operation> operation { get; set; }
+        public virtual DbSet<operationrecord> operationrecord { get; set; }
         public virtual DbSet<repair> repair { get; set; }
-        public virtual DbSet<result> result { get; set; }
-        public virtual DbSet<userrole> userrole { get; set; }
-        public virtual DbSet<users> users { get; set; }
         public virtual DbSet<repairmethod> repairmethod { get; set; }
         public virtual DbSet<repairreason> repairreason { get; set; }
         public virtual DbSet<repairresult> repairresult { get; set; }
+        public virtual DbSet<result> result { get; set; }
         public virtual DbSet<uidrecord> uidrecord { get; set; }
-        public virtual DbSet<operationrecord> operationrecord { get; set; }
+        public virtual DbSet<userrole> userrole { get; set; }
+        public virtual DbSet<users> users { get; set; }
     }
 }

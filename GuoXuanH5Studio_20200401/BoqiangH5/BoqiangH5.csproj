@@ -78,6 +78,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows" />
@@ -447,7 +448,7 @@
       <Name>BoqiangH5Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBService\DBService.csproj">
-      <Project>{8ca1952d-b4c6-4350-90e9-9bac5128f82b}</Project>
+      <Project>{baa45f91-8553-4ab3-acbb-0f5886017855}</Project>
       <Name>DBService</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1481,7 +1481,6 @@ D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\DBService.dl
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\EntityFramework.dll
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\EntityFramework.SqlServer.dll
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.dll
-D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.Entity.EF6.dll
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\BoqiangH5Entity.pdb
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\BoqiangH5Repository.pdb
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\DBService.pdb
@@ -1489,7 +1488,6 @@ D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\DBService.dl
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\EntityFramework.xml
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\EntityFramework.SqlServer.xml
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.xml
-D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.Entity.EF6.xml
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\zh-Hans\EntityFramework.resources.dll
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.csprojAssemblyReference.cache
@@ -1564,3 +1562,5 @@ D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.cs
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.csproj.CopyComplete
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.exe
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.pdb
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.Entity.EF6.dll
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.Entity.EF6.xml
