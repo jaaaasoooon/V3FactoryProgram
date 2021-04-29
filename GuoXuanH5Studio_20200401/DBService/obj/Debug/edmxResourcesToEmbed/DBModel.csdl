@@ -7,6 +7,7 @@
     <Property Name="OperationID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="operationrecord" Relationship="Self.operation_operationrecord" FromRole="operation" ToRole="operationrecord" />
+    <NavigationProperty Name="mac_operation" Relationship="DBModel.fk_operation" FromRole="operation" ToRole="mac_operation" />
   </EntityType>
   <EntityType Name="operationrecord">
     <Key>
@@ -209,5 +210,61 @@
       <End Role="userrole" EntitySet="userrole" />
       <End Role="users" EntitySet="users" />
     </AssociationSet>
+    <EntitySet Name="computermac" EntityType="DBModel.computermac" />
+    <EntitySet Name="mac_operation" EntityType="DBModel.mac_operation" />
+    <AssociationSet Name="fk_mac" Association="DBModel.fk_mac">
+      <End Role="computermac" EntitySet="computermac" />
+      <End Role="mac_operation" EntitySet="mac_operation" />
+    </AssociationSet>
+    <AssociationSet Name="fk_operation" Association="DBModel.fk_operation">
+      <End Role="operation" EntitySet="operation" />
+      <End Role="mac_operation" EntitySet="mac_operation" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="computermac">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="SByte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAC" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="mac_operation" Relationship="DBModel.fk_mac" FromRole="computermac" ToRole="mac_operation" />
+  </EntityType>
+  <EntityType Name="mac_operation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MACID" Type="SByte" Nullable="false" />
+    <Property Name="OperationID" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="computermac" Relationship="DBModel.fk_mac" FromRole="mac_operation" ToRole="computermac" />
+    <NavigationProperty Name="operation" Relationship="DBModel.fk_operation" FromRole="mac_operation" ToRole="operation" />
+  </EntityType>
+  <Association Name="fk_mac">
+    <End Type="DBModel.computermac" Role="computermac" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DBModel.mac_operation" Role="mac_operation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="computermac">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="mac_operation">
+        <PropertyRef Name="MACID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_operation">
+    <End Type="DBModel.operation" Role="operation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DBModel.mac_operation" Role="mac_operation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="operation">
+        <PropertyRef Name="OperationID" />
+      </Principal>
+      <Dependent Role="mac_operation">
+        <PropertyRef Name="OperationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

@@ -170,6 +170,9 @@
       <SubType>Code</SubType>
       <DependentUpon>SelectCANWnd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingMacWnd.xaml.cs">
+      <DependentUpon>SettingMacWnd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StatusConverter.cs" />
     <Compile Include="DDProtocol\DdUpdateBmsInfo.cs" />
     <Compile Include="UcBattery.xaml.cs">
@@ -278,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectCANWnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingMacWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="computermac">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MAC" Type="char" MaxLength="17" Nullable="false" />
+  </EntityType>
+  <EntityType Name="mac_operation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MACID" Type="tinyint" Nullable="false" />
+    <Property Name="OperationID" Type="smallint" Nullable="false" />
+  </EntityType>
   <EntityType Name="operation">
     <Key>
       <PropertyRef Name="OperationID" />
@@ -98,6 +113,34 @@
     <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="IsInit" Type="bool" Nullable="false" />
   </EntityType>
+  <Association Name="fk_mac">
+    <End Role="computermac" Type="Self.computermac" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="mac_operation" Type="Self.mac_operation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="computermac">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="mac_operation">
+        <PropertyRef Name="MACID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_operation">
+    <End Role="operation" Type="Self.operation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="mac_operation" Type="Self.mac_operation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="operation">
+        <PropertyRef Name="OperationID" />
+      </Principal>
+      <Dependent Role="mac_operation">
+        <PropertyRef Name="OperationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="operation_operationrecord">
     <End Role="operation" Type="Self.operation" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -169,6 +212,8 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="DBModelStoreContainer">
+    <EntitySet Name="computermac" EntityType="Self.computermac" Schema="v3" store:Type="Tables" />
+    <EntitySet Name="mac_operation" EntityType="Self.mac_operation" Schema="v3" store:Type="Tables" />
     <EntitySet Name="operation" EntityType="Self.operation" Schema="v3" store:Type="Tables" />
     <EntitySet Name="operationrecord" EntityType="Self.operationrecord" Schema="v3" store:Type="Tables" />
     <EntitySet Name="repair" EntityType="Self.repair" Schema="v3" store:Type="Tables" />
@@ -179,6 +224,14 @@
     <EntitySet Name="uidrecord" EntityType="Self.uidrecord" Schema="v3" store:Type="Tables" />
     <EntitySet Name="userrole" EntityType="Self.userrole" Schema="v3" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="v3" store:Type="Tables" />
+    <AssociationSet Name="fk_mac" Association="Self.fk_mac">
+      <End Role="computermac" EntitySet="computermac" />
+      <End Role="mac_operation" EntitySet="mac_operation" />
+    </AssociationSet>
+    <AssociationSet Name="fk_operation" Association="Self.fk_operation">
+      <End Role="operation" EntitySet="operation" />
+      <End Role="mac_operation" EntitySet="mac_operation" />
+    </AssociationSet>
     <AssociationSet Name="operation_operationrecord" Association="Self.operation_operationrecord">
       <End Role="operation" EntitySet="operation" />
       <End Role="operationrecord" EntitySet="operationrecord" />

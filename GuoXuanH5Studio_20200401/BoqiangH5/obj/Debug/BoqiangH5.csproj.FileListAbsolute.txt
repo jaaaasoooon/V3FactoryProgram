@@ -1564,3 +1564,5 @@ D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.ex
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\BoqiangH5.pdb
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.Entity.EF6.dll
 D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\bin\Debug\MySql.Data.Entity.EF6.xml
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\SettingMacWnd.g.cs
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5\obj\Debug\SettingMacWnd.baml

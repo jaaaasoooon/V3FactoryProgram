@@ -12,20 +12,17 @@ namespace DBService
     using System;
     using System.Collections.Generic;
     
-    public partial class operation
+    public partial class computermac
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public operation()
+        public computermac()
         {
-            this.operationrecord = new HashSet<operationrecord>();
             this.mac_operation = new HashSet<mac_operation>();
         }
     
-        public short OperationID { get; set; }
-        public string Type { get; set; }
+        public sbyte ID { get; set; }
+        public string MAC { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<operationrecord> operationrecord { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mac_operation> mac_operation { get; set; }
     }

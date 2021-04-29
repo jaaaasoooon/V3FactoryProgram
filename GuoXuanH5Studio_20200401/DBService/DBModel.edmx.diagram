@@ -20,6 +20,10 @@
         <AssociationConnector Association="DBModel.users_operationtype" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.repairresult_repair" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.users_userrole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBModel.computermac" Width="1.5" PointX="4.75" PointY="11.125" />
+        <EntityTypeShape EntityType="DBModel.mac_operation" Width="1.5" PointX="7" PointY="0.5" />
+        <AssociationConnector Association="DBModel.fk_mac" />
+        <AssociationConnector Association="DBModel.fk_operation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

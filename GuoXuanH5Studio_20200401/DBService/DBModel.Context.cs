@@ -35,5 +35,7 @@ namespace DBService
         public virtual DbSet<uidrecord> uidrecord { get; set; }
         public virtual DbSet<userrole> userrole { get; set; }
         public virtual DbSet<users> users { get; set; }
+        public virtual DbSet<computermac> computermac { get; set; }
+        public virtual DbSet<mac_operation> mac_operation { get; set; }
     }
 }

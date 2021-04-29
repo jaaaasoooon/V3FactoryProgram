@@ -14,6 +14,8 @@ using System.Windows.Documents;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.NetworkInformation;
+using DBService;
+using System.Linq;
 
 namespace BoqiangH5
 {
@@ -60,7 +62,45 @@ namespace BoqiangH5
             InitRecvDataEvenHandle();
         }
 
+        public static Dictionary<string, Dictionary<int,string>> Dic_Mac_Operation = new Dictionary<string, Dictionary<int,string>>();
+        public void GetMacOperation()
+        {
+            using (V3Entities v3 = new V3Entities())
+            {
+                var items = from oper in v3.operation
+                            join mac_oper in v3.mac_operation on oper.OperationID equals mac_oper.OperationID
+                            join mac in v3.computermac on mac_oper.MACID  equals mac.ID
+                            select new
+                            {
+                                macAddress = mac.MAC,
+                                operID = oper.OperationID,
+                                type = oper.Type
+                            };
 
+                foreach(var item in items)
+                {
+                    if(Dic_Mac_Operation.ContainsKey(item.macAddress))
+                    {
+                        var dic = Dic_Mac_Operation[item.macAddress];
+                        if(dic.ContainsKey(item.operID))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            dic.Add(item.operID, item.type);
+                        }
+                    }
+                    else
+                    {
+                        Dictionary<int, string> dic = new Dictionary<int, string>();
+                        dic.Add(item.operID, item.type);
+                        Dic_Mac_Operation.Add(item.macAddress, dic);
+                    }
+                }
+
+            }
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             string Mac;
@@ -71,7 +111,7 @@ namespace BoqiangH5
             }
             else
             {
-
+                GetMacOperation();
             }
             ////全局异常捕捉
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -444,9 +484,24 @@ namespace BoqiangH5
                         MessageBox.Show("您无权进行一键出厂的设置！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     break;
-                //case "menuUpdateMCUConfig":
-                //    ucMcuWnd.UpdateMcuConfigurationFile();
-                //    break;
+                case "menuMacSetting":
+                    if (RoleID == 1 || RoleID == 2)
+                    {
+                        if (m_statusBarInfo.IsOnline == true)
+                        {
+                            MessageBox.Show("请断开连接再进行设置！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            SettingMacWnd wnd = new SettingMacWnd();
+                            wnd.ShowDialog();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("您无权进行设置操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    break;
                 case "menuLanguageEn":
 
                     break;

@@ -109,5 +109,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="computermac">
+      <EntityTypeMapping TypeName="DBModel.computermac">
+        <MappingFragment StoreEntitySet="computermac">
+          <ScalarProperty Name="MAC" ColumnName="MAC" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mac_operation">
+      <EntityTypeMapping TypeName="DBModel.mac_operation">
+        <MappingFragment StoreEntitySet="mac_operation">
+          <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+          <ScalarProperty Name="MACID" ColumnName="MACID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
