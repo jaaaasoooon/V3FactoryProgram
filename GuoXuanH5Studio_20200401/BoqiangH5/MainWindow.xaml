@@ -129,7 +129,7 @@
             </MenuItem>
             <MenuItem Name="menuMacSetting" Click="MenuItem_Click">
                 <MenuItem.Header >
-                    <TextBlock Text="{DynamicResource tbAddUser}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource tbMacSetting}" VerticalAlignment="Center"/>
                 </MenuItem.Header>
                 <MenuItem.Icon>
                     <Image Source="Images/user.png"/>

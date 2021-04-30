@@ -35,36 +35,36 @@ namespace BoqiangH5
             {
                 using (V3Entities V3 = new V3Entities())
                 {
-                    var items = from oper in V3.operation
-                                join mac_oper in V3.mac_operation on oper.OperationID equals mac_oper.OperationID
-                                join mac in V3.computermac on mac_oper.MACID equals mac.ID
-                                select new
-                                {
-                                    macAddress = mac.MAC,
-                                    operID = oper.OperationID,
-                                    type = oper.Type
-                                };
-                    foreach (var item in items)
+                    foreach (var item in V3.computermac.ToList())
                     {
-                        if (dic.ContainsKey(item.macAddress))
+                        var items = V3.mac_operation.Where(p => p.MACID == item.ID).ToList();
+                        foreach(var it in items)
                         {
-                            var _dic = dic[item.macAddress];
-                            if (_dic.ContainsKey(item.operID))
+                            var _it = V3.operation.FirstOrDefault(p => p.OperationID == it.OperationID);
+                            if(_it != null)
                             {
-                                continue;
+                                if (dic.ContainsKey(item.MAC))
+                                {
+                                    var _dic = dic[item.MAC];
+                                    if (_dic.ContainsKey(_it.OperationID))
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        _dic.Add(_it.OperationID, _it.Type);
+                                    }
+                                }
+                                else
+                                {
+                                    Dictionary<int, string> _dic = new Dictionary<int, string>();
+                                    _dic.Add(_it.OperationID, _it.Type);
+                                    dic.Add(item.MAC, _dic);
+                                }
                             }
-                            else
-                            {
-                                _dic.Add(item.operID, item.type);
-                            }
-                        }
-                        else
-                        {
-                            Dictionary<int, string> _dic = new Dictionary<int, string>();
-                            _dic.Add(item.operID, item.type);
-                            dic.Add(item.macAddress, _dic);
                         }
                     }
+
 
                     foreach (var item in dic)
                     {
@@ -108,7 +108,20 @@ namespace BoqiangH5
                     MessageBox.Show("请输入正确的MAC地址！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
-
+                bool isCheck = false;
+                foreach (CheckBox chk in ((Grid)gbOperation.Content).Children)
+                {
+                    if(chk.IsChecked == true)
+                    {
+                        isCheck = true;
+                        break;
+                    }
+                }
+                if(isCheck == false)
+                {
+                    MessageBox.Show("请给该MAC地址配置相应的操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
                 using (V3Entities V3 = new V3Entities())
                 {
                     var it = V3.computermac.FirstOrDefault(p => p.MAC == mac);
@@ -120,8 +133,10 @@ namespace BoqiangH5
                     computermac computermacs = new computermac();
                     computermacs.MAC = mac;
                     V3.computermac.Add(computermacs);
-
-                    foreach(CheckBox chk in ((Grid)gbOperation.Content).Children)
+                    V3.SaveChanges();
+                    sbyte macID = (sbyte)(V3.computermac.Max(p => p.ID));
+                    string operStr = string.Empty;
+                    foreach (CheckBox chk in ((Grid)gbOperation.Content).Children)
                     {
                         if(chk.IsChecked == true)
                         {
@@ -129,9 +144,11 @@ namespace BoqiangH5
                             var oper = V3.operation.FirstOrDefault(p => p.Type == chk.Content.ToString());
                             if(oper != null)
                             {
-                                mac_oper.MACID = (sbyte)(V3.computermac.Max(p => p.ID) + 1);
+                                mac_oper.MACID =  macID;
                                 mac_oper.OperationID = oper.OperationID;
                                 V3.mac_operation.Add(mac_oper);
+                                operStr += oper.Type;
+                                operStr += ";";
                             }
                             else
                             {
@@ -142,6 +159,11 @@ namespace BoqiangH5
                     }
                     V3.SaveChanges();
                     MessageBox.Show("MAC信息设置添加成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MacInfo info = new MacInfo();
+                    info.Mac = mac;
+                    info.Operations = operStr.TrimEnd(';');
+                    macInfoList.Add(info);
+                    dgMacInfo.Items.Refresh();
                 }
             }
             catch(Exception ex)
@@ -156,12 +178,31 @@ namespace BoqiangH5
             try
             {
                 MacInfo info = dgMacInfo.SelectedItem as MacInfo;
+                if(info == null)
+                {
+                    MessageBox.Show("请先在表格中选择要修改的项！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
                 if (tbMac.Text.Trim() != info.Mac)
                 {
                     MessageBox.Show("修改MAC配置时只能修改相关的操作，不可更改MAC地址！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
-                using(V3Entities V3 = new V3Entities())
+                bool isCheck = false;
+                foreach (CheckBox chk in ((Grid)gbOperation.Content).Children)
+                {
+                    if (chk.IsChecked == true)
+                    {
+                        isCheck = true;
+                        break;
+                    }
+                }
+                if (isCheck == false)
+                {
+                    MessageBox.Show("请给该MAC地址配置相应的操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+                using (V3Entities V3 = new V3Entities())
                 {
                     var mac = V3.computermac.FirstOrDefault(p => p.MAC == tbMac.Text.Trim());
                     if(mac != null)
@@ -173,6 +214,7 @@ namespace BoqiangH5
                         }
                     }
 
+                    string operStr = string.Empty;
                     foreach (CheckBox chk in ((Grid)gbOperation.Content).Children)
                     {
                         if (chk.IsChecked == true)
@@ -184,6 +226,8 @@ namespace BoqiangH5
                                 mac_oper.MACID = mac.ID;
                                 mac_oper.OperationID = oper.OperationID;
                                 V3.mac_operation.Add(mac_oper);
+                                operStr += oper.Type;
+                                operStr += ";";
                             }
                             else
                             {
@@ -194,6 +238,8 @@ namespace BoqiangH5
                     }
                     V3.SaveChanges();
                     MessageBox.Show("MAC信息设置修改成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    info.Operations = operStr.TrimEnd(';');
+                    dgMacInfo.Items.Refresh();
                 }
             }
             catch(Exception ex)
@@ -248,6 +294,13 @@ namespace BoqiangH5
                             V3.computermac.Remove(item);
                             V3.SaveChanges();
                             MessageBox.Show("MAC信息设置删除成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            macInfoList.Remove(info);
+                            dgMacInfo.Items.Refresh();
+                            tbMac.Text = string.Empty;
+                            foreach (CheckBox chk in ((Grid)gbOperation.Content).Children)
+                            {
+                                chk.IsChecked = false;
+                            }
                         }
                     }
                 }

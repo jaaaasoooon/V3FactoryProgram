@@ -121,6 +121,7 @@
     <sys:String x:Key="tbFactorySetting">One-click Factory Setting</sys:String>
     <sys:String x:Key="tbUpdateMCU">Update MCU Configuation</sys:String>
     <sys:String x:Key="tbAddUser">Add User</sys:String>
+    <sys:String x:Key="tbMacSetting">Mac Setting</sys:String>
     <sys:String x:Key="tbLanguage">Language</sys:String>
     <sys:String x:Key="tbChinese">Chinese</sys:String>
     <sys:String x:Key="tbEnglish">English</sys:String>

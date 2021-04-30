@@ -116,6 +116,7 @@
     <sys:String x:Key="tbFactorySetting">一键出厂设置</sys:String>
     <sys:String x:Key="tbUpdateMCU">更新MCU配置文件</sys:String>
     <sys:String x:Key="tbAddUser">添加用户</sys:String>
+    <sys:String x:Key="tbMacSetting">Mac设置</sys:String>
     <sys:String x:Key="tbLanguage">语言</sys:String>
     <sys:String x:Key="tbChinese">中文</sys:String>
     <sys:String x:Key="tbEnglish">英文</sys:String>
