@@ -132,7 +132,7 @@
                     <TextBlock Text="{DynamicResource tbMacSetting}" VerticalAlignment="Center"/>
                 </MenuItem.Header>
                 <MenuItem.Icon>
-                    <Image Source="Images/user.png"/>
+                    <Image Source="Images/computer.png"/>
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
@@ -288,13 +288,14 @@
 
             </Grid.ColumnDefinitions>
             <Label Name="labVersion" Content="版本号：V21.03.12.01" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,2" FontSize="12" Foreground="White" Grid.Column="0"/>
-            <Ellipse Grid.Column="2" Width="20" Height="20" Stroke="Silver" StrokeThickness="3" Margin="5">
+            <Ellipse Grid.Column="3" Width="20" Height="20" Stroke="Silver" StrokeThickness="3" Margin="5">
                 <Ellipse.Fill>
                     
                     <SolidColorBrush x:Name="statusBrush" Color="Black"  />
                 </Ellipse.Fill>
             </Ellipse>
-            <Label Name="labOnLine" Content="{Binding OnlineStatus}" HorizontalAlignment="Center" Height="26" Margin="5,2" Width="50" FontSize="14" Foreground="White" Grid.Column="3"/>
+            <Label Name="labOnLine" Content="{Binding OnlineStatus}" HorizontalAlignment="Center" Height="26" Margin="5,2" Width="50" FontSize="14" Foreground="White" Grid.Column="4"/>
+            <Label Name="labUser" Content="{Binding OnlineStatus}" HorizontalAlignment="Center" Height="26" Margin="5,2"  FontSize="14" Foreground="White" Grid.Column="2"/>
 
             <!--<Grid Grid.Column="4" >
                 <Grid.ColumnDefinitions>
@@ -330,7 +331,7 @@
                 <TextBlock Grid.Column="5" Text="{DynamicResource txblNormal}" Foreground="White" FontSize="14" Margin="5,0"/>
 
             </Grid>-->
-            <Button Name="btnTest" Content="测试" Grid.Column="0" Width="80" Height="26" Click="BtnTest_Click" Margin="20,2" Visibility="Hidden"/>
+            <!--<Button Name="btnTest" Content="测试" Grid.Column="0" Width="80" Height="26" Click="BtnTest_Click" Margin="20,2" Visibility="Hidden"/>-->
             <Label Name="labTip" Grid.Column="1" HorizontalAlignment="Center" Foreground="White" Margin="20,2" FontSize="16"></Label>
         </Grid>
     </Grid>

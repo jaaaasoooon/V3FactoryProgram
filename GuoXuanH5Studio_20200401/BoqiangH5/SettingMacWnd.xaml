@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoqiangH5"
         mc:Ignorable="d"
-        Title="MAC设置" Height="450" Width="400" WindowStartupLocation="CenterScreen"
+        Title="MAC设置" Height="450" Width="420" WindowStartupLocation="CenterScreen"
         MouseLeftButtonDown="Window_MouseLeftButtonDown" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>

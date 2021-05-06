@@ -62,57 +62,67 @@ namespace BoqiangH5
             InitRecvDataEvenHandle();
         }
 
-        public static Dictionary<string, Dictionary<int,string>> Dic_Mac_Operation = new Dictionary<string, Dictionary<int,string>>();
-        public void GetMacOperation()
+        private void GetUserInfo()
         {
-            using (V3Entities v3 = new V3Entities())
+            try
             {
-                var items = from oper in v3.operation
-                            join mac_oper in v3.mac_operation on oper.OperationID equals mac_oper.OperationID
-                            join mac in v3.computermac on mac_oper.MACID  equals mac.ID
-                            select new
-                            {
-                                macAddress = mac.MAC,
-                                operID = oper.OperationID,
-                                type = oper.Type
-                            };
-
-                foreach(var item in items)
+                using (V3Entities V3 = new V3Entities())
                 {
-                    if(Dic_Mac_Operation.ContainsKey(item.macAddress))
+                    var user = V3.users.FirstOrDefault(p => p.UserID == UserID);
+                    if(user != null)
                     {
-                        var dic = Dic_Mac_Operation[item.macAddress];
-                        if(dic.ContainsKey(item.operID))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            dic.Add(item.operID, item.type);
-                        }
+                        string userStr = string.Format("用户：{0}（{1}）", user.UserName, user.UserID);
+                        labUser.Content = userStr;
                     }
                     else
                     {
-                        Dictionary<int, string> dic = new Dictionary<int, string>();
-                        dic.Add(item.operID, item.type);
-                        Dic_Mac_Operation.Add(item.macAddress, dic);
+                        MessageBox.Show("找不到ID为 {0} 的用户！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
-
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string Mac;
-            if(!GetLocalMac(out Mac))
+            #region 根据用户角色限制功能
+            if(RoleID == 4)
             {
-                MessageBox.Show("获取本机MAC地址失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
+                ucBqBmsInfoWnd.Visibility = Visibility.Visible;
+                ucDdBmsInfoWnd.Visibility = Visibility.Hidden;
+                ucEepromWnd.Visibility = Visibility.Hidden;
+                ucMcuWnd.Visibility = Visibility.Hidden;
+                ucAdjustWnd.Visibility = Visibility.Hidden;
+                ucDebugWnd.Visibility = Visibility.Hidden;
+                ucProtectParamWnd.Visibility = Visibility.Hidden;
+                ucDdRecordWnd.Visibility = Visibility.Hidden;
+                ucProtectParamWnd.StartOrStopTimer(true);
+                ucQueryWnd.Visibility = Visibility.Hidden;
+                ucRepairWnd.Visibility = Visibility.Hidden;
+
+                gridMenuInfo.Visibility = Visibility.Visible;
+                gridMenuEeprom.Visibility = Visibility.Hidden;
+                gridMenuMcu.Visibility = Visibility.Hidden;
+                gridMenuParam.Visibility = Visibility.Hidden;
+                gridMenuAdjust.Visibility = Visibility.Hidden;
+                gridMenuDebug.Visibility = Visibility.Hidden;
+                gridMenuDidiInfo.Visibility = Visibility.Hidden;
+                gridMenuQuery.Visibility = Visibility.Hidden;
+                gridMenuRecord.Visibility = Visibility.Hidden;
+                gridMenuRepair.Visibility = Visibility.Hidden;
+                Grid.SetRow(borderMsg, 0);
             }
-            else
+            else if(RoleID == 3)
             {
-                GetMacOperation();
+                ucQueryWnd.Visibility = Visibility.Hidden;
+                gridMenuQuery.Visibility = Visibility.Hidden;
+                Grid.SetRow(borderRepair, 8);
             }
+            GetUserInfo();
+            #endregion
+
             ////全局异常捕捉
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
@@ -474,7 +484,7 @@ namespace BoqiangH5
                     }
                     break;
                 case "menuFactorySetting":
-                    if (RoleID == 1)
+                    if (RoleID == 1 || RoleID == 2)
                     {
                         OneClickFactorySetting wnd = new OneClickFactorySetting();
                         wnd.ShowDialog();
@@ -499,7 +509,7 @@ namespace BoqiangH5
                     }
                     else
                     {
-                        MessageBox.Show("您无权进行设置操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("您无权进行Mac设置操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     break;
                 case "menuLanguageEn":
@@ -1247,38 +1257,5 @@ namespace BoqiangH5
         //    this.Close();
         //}
 
-        public bool GetLocalMac(out string mac)
-        {
-            mac = string.Empty;
-            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
-            foreach(NetworkInterface adapter in nics)
-            {
-                IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
-                UnicastIPAddressInformationCollection allAddress = adapterProperties.UnicastAddresses;
-                if(allAddress.Count > 0)
-                {
-                    if(adapter.OperationalStatus == OperationalStatus.Up)
-                    {
-                        mac = adapter.GetPhysicalAddress().ToString();
-                        break;
-                    }
-                }
-            }
-            if(!string.IsNullOrWhiteSpace(mac))
-            {
-                if (mac.Length == 12)
-                {
-                    mac = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2),
-                        mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2));
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

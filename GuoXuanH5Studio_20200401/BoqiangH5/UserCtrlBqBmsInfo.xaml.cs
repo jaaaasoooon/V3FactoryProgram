@@ -17,6 +17,7 @@ using DBService;
 using BoqiangH5.DDProtocol;
 using System.Windows.Documents;
 using System.Text;
+using System.Net.NetworkInformation;
 
 namespace BoqiangH5
 {
@@ -302,6 +303,136 @@ namespace BoqiangH5
 
         }
 
+        public static Dictionary<string, Dictionary<int, string>> Dic_Mac_Operation = new Dictionary<string, Dictionary<int, string>>();
+        public void GetMacOperation()
+        {
+            using (V3Entities v3 = new V3Entities())
+            {
+                var items = from oper in v3.operation
+                            join mac_oper in v3.mac_operation on oper.OperationID equals mac_oper.OperationID
+                            join mac in v3.computermac on mac_oper.MACID equals mac.ID
+                            select new
+                            {
+                                macAddress = mac.MAC,
+                                operID = oper.OperationID,
+                                type = oper.Type
+                            };
+
+                foreach (var item in items)
+                {
+                    if (Dic_Mac_Operation.ContainsKey(item.macAddress))
+                    {
+                        var dic = Dic_Mac_Operation[item.macAddress];
+                        if (dic.ContainsKey(item.operID))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            dic.Add(item.operID, item.type);
+                        }
+                    }
+                    else
+                    {
+                        Dictionary<int, string> dic = new Dictionary<int, string>();
+                        dic.Add(item.operID, item.type);
+                        Dic_Mac_Operation.Add(item.macAddress, dic);
+                    }
+                }
+
+            }
+        }
+        public bool GetLocalMac(out string mac)
+        {
+            mac = string.Empty;
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface adapter in nics)
+            {
+                IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
+                UnicastIPAddressInformationCollection allAddress = adapterProperties.UnicastAddresses;
+                if (allAddress.Count > 0)
+                {
+                    if (adapter.OperationalStatus == OperationalStatus.Up)
+                    {
+                        mac = adapter.GetPhysicalAddress().ToString();
+                        break;
+                    }
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(mac))
+            {
+                if (mac.Length == 12)
+                {
+                    mac = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2),
+                        mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2));
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void GetMacSetting()
+        {
+            string Mac;
+            if (!GetLocalMac(out Mac))
+            {
+                MessageBox.Show("获取本机MAC地址失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            else
+            {
+                GetMacOperation();
+                if (Dic_Mac_Operation.Count > 0 && MainWindow.RoleID == 4)
+                {
+                    Dictionary<int, string> dic_operations = Dic_Mac_Operation[Mac];
+                    foreach (var item in dic_operations.Values)
+                    {
+                        switch (item)
+                        {
+                            case "上电":
+                                btnPowerON.IsEnabled = true; 
+                                break;
+                            case "下电":
+                                btnPowerOFF.IsEnabled = true;
+                                break;
+                            case "关机":
+                                btnDeepSleep.IsEnabled = true;
+                                break;
+                            case "休眠":
+                                btnShallowSleep.IsEnabled = true;
+                                break;
+                            case "零点校准":
+                                btnAdjustZero.IsEnabled = true;
+                                break;
+                            case "负10A校准":
+                                btnAdjust10A.IsEnabled = true;
+                                break;
+                            case "SOC校准":
+                                btnAdjustSOC.IsEnabled = true;
+                                break;
+                            case "充放电测试":
+                                btnChargeOrDischarge.IsEnabled = true;
+                                break;
+                            case "一键出场配置":
+                                btnOneClickFactory.IsEnabled = true;
+                                break;
+                            case "一键出厂检验":
+                                btnOneClickFactoryCheck.IsEnabled = true;
+                                break;
+                            case "BMS注册":
+                                btnBMSRegister.IsEnabled = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
         public void SetOffLineUIStatus()
         {
             SetOffLineStatus(m_ListSysStatus);
