@@ -49,6 +49,7 @@
                 <CheckBox Grid.Row="2" Grid.Column="0" Name="chkSoc" Content="SOC校准" VerticalAlignment="Center" HorizontalAlignment="Left"></CheckBox>
                 <CheckBox Grid.Row="2" Grid.Column="1" Name="chkZero" Content="零点校准" VerticalAlignment="Center" HorizontalAlignment="Left"></CheckBox>
                 <CheckBox Grid.Row="2" Grid.Column="2" Name="chk10A" Content="负10A校准" VerticalAlignment="Center" HorizontalAlignment="Left"></CheckBox>
+                <CheckBox Grid.Row="2" Grid.Column="3" Name="chkBinding" Content="BMS绑定" VerticalAlignment="Center" HorizontalAlignment="Left"></CheckBox>
             </Grid>
         </GroupBox>
         <Border BorderBrush="LightGray" BorderThickness="1" Margin="5" Grid.Row="2">

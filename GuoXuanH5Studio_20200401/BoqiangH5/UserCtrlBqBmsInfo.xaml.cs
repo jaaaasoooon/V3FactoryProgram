@@ -303,43 +303,24 @@ namespace BoqiangH5
 
         }
 
-        public static Dictionary<string, Dictionary<int, string>> Dic_Mac_Operation = new Dictionary<string, Dictionary<int, string>>();
-        public void GetMacOperation()
+        Dictionary<int, string> Dic_Mac_Operation = new Dictionary<int, string>();
+        public void GetMacOperation(string _mac)
         {
             using (V3Entities v3 = new V3Entities())
             {
                 var items = from oper in v3.operation
                             join mac_oper in v3.mac_operation on oper.OperationID equals mac_oper.OperationID
                             join mac in v3.computermac on mac_oper.MACID equals mac.ID
-                            select new
+                            where mac.MAC == _mac select new 
                             {
-                                macAddress = mac.MAC,
                                 operID = oper.OperationID,
                                 type = oper.Type
                             };
 
                 foreach (var item in items)
                 {
-                    if (Dic_Mac_Operation.ContainsKey(item.macAddress))
-                    {
-                        var dic = Dic_Mac_Operation[item.macAddress];
-                        if (dic.ContainsKey(item.operID))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            dic.Add(item.operID, item.type);
-                        }
-                    }
-                    else
-                    {
-                        Dictionary<int, string> dic = new Dictionary<int, string>();
-                        dic.Add(item.operID, item.type);
-                        Dic_Mac_Operation.Add(item.macAddress, dic);
-                    }
+                    Dic_Mac_Operation.Add(item.operID, item.type);
                 }
-
             }
         }
         public bool GetLocalMac(out string mac)
@@ -385,49 +366,65 @@ namespace BoqiangH5
             }
             else
             {
-                GetMacOperation();
-                if (Dic_Mac_Operation.Count > 0 && MainWindow.RoleID == 4)
+                if(MainWindow.RoleID == 4)
                 {
-                    Dictionary<int, string> dic_operations = Dic_Mac_Operation[Mac];
-                    foreach (var item in dic_operations.Values)
+                    foreach (Control ctrl in gridOperation.Children)
                     {
-                        switch (item)
+                        if (ctrl is Button)
                         {
-                            case "上电":
-                                btnPowerON.IsEnabled = true; 
-                                break;
-                            case "下电":
-                                btnPowerOFF.IsEnabled = true;
-                                break;
-                            case "关机":
-                                btnDeepSleep.IsEnabled = true;
-                                break;
-                            case "休眠":
-                                btnShallowSleep.IsEnabled = true;
-                                break;
-                            case "零点校准":
-                                btnAdjustZero.IsEnabled = true;
-                                break;
-                            case "负10A校准":
-                                btnAdjust10A.IsEnabled = true;
-                                break;
-                            case "SOC校准":
-                                btnAdjustSOC.IsEnabled = true;
-                                break;
-                            case "充放电测试":
-                                btnChargeOrDischarge.IsEnabled = true;
-                                break;
-                            case "一键出场配置":
-                                btnOneClickFactory.IsEnabled = true;
-                                break;
-                            case "一键出厂检验":
-                                btnOneClickFactoryCheck.IsEnabled = true;
-                                break;
-                            case "BMS注册":
-                                btnBMSRegister.IsEnabled = true;
-                                break;
-                            default:
-                                break;
+                            ctrl.IsEnabled = false;
+                        }
+                    }
+                    btnBMSRegister.IsEnabled = false;
+                    btnWriteBMSDevice.IsEnabled = false;
+                    btnWritePackDevice.IsEnabled = false;
+                    tbSn.IsEnabled = false;
+                    GetMacOperation(Mac);
+                    if (Dic_Mac_Operation.Count > 0)
+                    {
+                        foreach (var item in Dic_Mac_Operation.Values)
+                        {
+                            switch (item)
+                            {
+                                case "上电":
+                                    btnPowerON.IsEnabled = true;
+                                    break;
+                                case "下电":
+                                    btnPowerOFF.IsEnabled = true;
+                                    break;
+                                case "关机":
+                                    btnDeepSleep.IsEnabled = true;
+                                    break;
+                                case "休眠":
+                                    btnShallowSleep.IsEnabled = true;
+                                    break;
+                                case "零点校准":
+                                    btnAdjustZero.IsEnabled = true;
+                                    break;
+                                case "负10A校准":
+                                    btnAdjust10A.IsEnabled = true;
+                                    break;
+                                case "SOC校准":
+                                    btnAdjustSOC.IsEnabled = true;
+                                    break;
+                                case "充放电测试":
+                                    btnChargeOrDischarge.IsEnabled = true;
+                                    break;
+                                case "一键出厂配置":
+                                    btnOneClickFactory.IsEnabled = true;
+                                    break;
+                                case "一键出厂检验":
+                                    btnOneClickFactoryCheck.IsEnabled = true;
+                                    break;
+                                case "BMS注册":
+                                    btnBMSRegister.IsEnabled = true;
+                                    break;
+                                case "BMS绑定":
+                                    tbSn.IsEnabled = true;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }

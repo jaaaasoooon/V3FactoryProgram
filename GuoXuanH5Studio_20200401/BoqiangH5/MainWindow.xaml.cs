@@ -121,6 +121,9 @@ namespace BoqiangH5
                 Grid.SetRow(borderRepair, 8);
             }
             GetUserInfo();
+
+            //根据MAC地址设置限定功能
+            ucBqBmsInfoWnd.GetMacSetting();
             #endregion
 
             ////全局异常捕捉
@@ -146,14 +149,6 @@ namespace BoqiangH5
 
             ucBqBmsInfoWnd.ShallowSleepEvent += Sleep_Clicked;//点击浅休眠事件
             ucBqBmsInfoWnd.DeepSleepEvent += Sleep_Clicked;//点击深休眠事件
-            if (RoleID == 1)
-            {
-                ucBqBmsInfoWnd.btnBMSRegister.IsEnabled = true;
-            }
-            else
-            {
-                ucBqBmsInfoWnd.btnBMSRegister.IsEnabled = false;
-            }
 
             //ucEepromWnd.GetFileEvent += OnGetEepromFile;
             //ucMcuWnd.GetFileEvent += OnGetMcuFile;

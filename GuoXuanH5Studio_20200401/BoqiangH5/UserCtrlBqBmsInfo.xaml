@@ -15,7 +15,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="1"  BorderBrush="Black">
-            <Grid>
+            <Grid Name="gridOperation">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"></ColumnDefinition>
                     <ColumnDefinition Width="80"></ColumnDefinition>
@@ -168,8 +168,8 @@
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Button Name="btnReadDevice" Grid.Column="2" HorizontalAlignment="Right" Margin="2"  Content="读取设备信息" Width="90" Height="28" Click="btnReadBqDevice_Clicked"></Button>
-                                    <Button Name="btnWriteBMSDevice" Grid.Column="0" HorizontalAlignment="Left" Margin="2"  Content="写BMS信息" Width="90" Height="28" Click="btnWriteBMSDevice_Click"></Button>
-                                    <Button Name="btnWritePackDevice" Grid.Column="1" HorizontalAlignment="Center" Margin="2" Content="写电池包信息" Width="90" Height="28" Click="btnWritePackDevice_Click_1"></Button>
+                                    <Button Name="btnWriteBMSDevice" Grid.Column="0" HorizontalAlignment="Left" Margin="2"  Content="写BMS信息" Width="90" Height="28" Click="btnWriteBMSDevice_Click" ></Button>
+                                    <Button Name="btnWritePackDevice" Grid.Column="1" HorizontalAlignment="Center" Margin="2" Content="写电池包信息" Width="90" Height="28" Click="btnWritePackDevice_Click_1" ></Button>
                                 </Grid>
 
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="10 0 10 0">
