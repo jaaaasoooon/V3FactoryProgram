@@ -46,10 +46,8 @@ namespace BoqiangH5
         static List<BitStatInfo> m_ListLogicStatus = new List<BitStatInfo>();
         static Dictionary<string, string> m_DicManufactureCode = new Dictionary<string, string>();
 
-        //MCU消息
-        List<H5BmsInfo> ListSysInfo1 = new List<H5BmsInfo>();
-        List<H5BmsInfo> ListSysInfo2 = new List<H5BmsInfo>();
-        List<H5BmsInfo> ListChargeInfo = new List<H5BmsInfo>();
+        static List<BitStatInfo> m_ListErrorSysStatus = new List<BitStatInfo>();
+        static List<BitStatInfo> m_ListErrorProtectStatus = new List<BitStatInfo>();
 
         string U_ID = "默认值";
         OperationTypeEnum operateType = OperationTypeEnum.默认值;
@@ -255,10 +253,10 @@ namespace BoqiangH5
             XmlHelper.LoadBqBmsStatusConfig(strConfigFile, "logic_status_info/byte_status_info/bit_status_info", m_ListLogicStatus);
             XmlHelper.LoadManufactureCode(strConfigFile, "manufacture_code/manufacture_code_node", m_DicManufactureCode);
 
-            //读MCU参数
-            XmlHelper.LoadXmlConfig(strConfigFile, "mcu_info/system1/mcu_node_info", ListSysInfo1);
-            XmlHelper.LoadXmlConfig(strConfigFile, "mcu_info/system2/mcu_node_info", ListSysInfo2);
-            XmlHelper.LoadXmlConfig(strConfigFile, "mcu_info/charge_discharge/mcu_node_info", ListChargeInfo);
+            ////读MCU参数
+            //XmlHelper.LoadXmlConfig(strConfigFile, "mcu_info/system1/mcu_node_info", ListSysInfo1);
+            //XmlHelper.LoadXmlConfig(strConfigFile, "mcu_info/system2/mcu_node_info", ListSysInfo2);
+            //XmlHelper.LoadXmlConfig(strConfigFile, "mcu_info/charge_discharge/mcu_node_info", ListChargeInfo);
 
             m_ListSysStatus.AddRange(m_ListPackStatus);
             //m_ListSysStatus.AddRange(m_ListMosStatus);
@@ -2865,6 +2863,88 @@ namespace BoqiangH5
             }
         }
 
+        bool isReadFlash = false;
+        private void btnReadFlash_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.m_statusBarInfo.IsOnline)
+            {
+                isReadFlash = true;
+                BqProtocol.BqInstance.m_bIsStopCommunication = true;
+                Thread.Sleep(200);
+                BqProtocol.BqInstance.BQ_ReadFlash();
+            }
+            else
+            {
+                MessageBox.Show("系统未连接，请连接后再进行操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+        public void HandleRecvBqFlashInfoEvent(object sender, CustomRecvDataEventArgs e)
+        {
+            try
+            {
+                BqProtocol.BqInstance.m_bIsStopCommunication = false;
+                if (e.RecvMsg[0] != 0xCC || e.RecvMsg[1] != 0xBA || e.RecvMsg.Count < (e.RecvMsg[2] << 8 | e.RecvMsg[3]))
+                {
+                    return;
+                }
+                int offset = 4;
+                for (int i = 1; i <= 4; i++)
+                {
+                    int length = 0;
+                    if (i % 2 == 0)
+                        length = 32;
+                    else
+                        length = 16;
+                    byte[] array = new byte[length];
+                    Buffer.BlockCopy(e.RecvMsg.ToArray(), offset, array, 0, array.Length);
+                    offset += length;
+                    string val = System.Text.Encoding.ASCII.GetString(array);
+                    int len = val.IndexOf('\0');
+                    if (len >= 0)
+                    {
+                        if (i == 1)
+                            tbBMSProducedDate.Text = val.Substring(0, len);
+                        else if (i == 2)
+                            tbBMSID.Text = val.Substring(0, len);
+                        else if (i == 3)
+                            tbPackProducedDate.Text = val.Substring(0, len);
+                        else
+                            tbPackID.Text = val.Substring(0, len);
+                    }
+                    else
+                    {
+                        if (i == 1)
+                            tbBMSProducedDate.Text = val;
+                        else if (i == 2)
+                            tbBMSID.Text = val;
+                        else if (i == 3)
+                            tbPackProducedDate.Text = val;
+                        else
+                            tbPackID.Text = val;
+                    }
+                }
+
+                MessageBox.Show("外部Flash读取成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "异常", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void cbSimpleMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbSimpleMode.IsChecked == true && MainWindow.m_statusBarInfo.IsOnline == true)
+            {
+                listBoxSysStatus.ItemsSource = m_ListErrorSysStatus;
+                listBoxBatStatus.ItemsSource = m_ListErrorProtectStatus;
+            }
+            else
+            {
+                listBoxSysStatus.ItemsSource = m_ListSysStatus;
+                listBoxBatStatus.ItemsSource = m_ListProtectStatus;
+            }
+        }
         #region 数据库操作
         void SaveOperationRecord(string data, OperationTypeEnum type, OperationResultEnum result, string comments)
         {

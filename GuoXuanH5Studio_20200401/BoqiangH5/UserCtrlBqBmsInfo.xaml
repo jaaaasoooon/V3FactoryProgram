@@ -186,6 +186,37 @@
                                 </Border>
                             </Grid>
                         </TabItem>
+                        <TabItem Header="Flash信息">
+                            <Grid>
+                                <GroupBox Grid.ColumnSpan="2" Header="Flash中备份的设备ID信息">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Label Style="{StaticResource LabelStyle}" Grid.Column="0" Grid.Row="0"  Content="保护板序列号"  HorizontalAlignment="Left"></Label>
+                                        <TextBox Name="tbBMSID" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="0" Margin="3 0 3 0" IsReadOnly="True"/>
+                                        <Label Style="{StaticResource LabelStyle}" Grid.Column="0" Grid.Row="1" Content="保护板生产日期"  HorizontalAlignment="Left"></Label>
+                                        <TextBox Name="tbBMSProducedDate" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1"  Margin="3 0 3 0" IsReadOnly="True"/>
+
+                                        <Label Style="{StaticResource LabelStyle}" Grid.Column="0" Grid.Row="2"  Content="电池包序列号"  HorizontalAlignment="Left"></Label>
+                                        <TextBox Name="tbPackID" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="2"  Margin="3 0 3 0" IsReadOnly="True"/>
+                                        <Label Style="{StaticResource LabelStyle}" Grid.Column="0" Grid.Row="3" Content="电池包生产日期"  HorizontalAlignment="Left"></Label>
+                                        <TextBox Name="tbPackProducedDate" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="3" Margin="3 0 3 0" IsReadOnly="True"/>
+
+                                        <Button Name="btnReadFlash" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Content="读取" Height="30" Width="80" Click="btnReadFlash_Click"/>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
                     </TabControl>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
@@ -325,10 +356,12 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="60"/>
                                 </Grid.ColumnDefinitions>
                                 <Button Content="BMS登记"  Grid.Column="0" Width="80" Style="{StaticResource ButtonStyle}" Name="btnBMSRegister" Click="btnBMSRegister_Click" />
-                                <CheckBox Name="cbIsSaveBms" Content="记录" Grid.Column="2" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbIsSaveBms_Click"  />
+                                <CheckBox Name="cbSimpleMode" Content="精简模式" Grid.Column="2" Width="80" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbSimpleMode_Click" />
+                                <CheckBox Name="cbIsSaveBms" Content="记录" Grid.Column="3" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbIsSaveBms_Click"  />
                             </Grid>
                         </Border>
 

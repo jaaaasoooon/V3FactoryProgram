@@ -657,6 +657,12 @@ namespace BoqiangH5.BQProtocol
             SendSingleFrameData(buf);
         }
 
+        public void BQ_ReadFlash()
+        {
+            byte[] buf = new byte[] { 0x3A, 0x03, 0xCC, 0xBA, 0x00, 0x06, 0x00, 0x00 };
+
+            SendSingleFrameData(buf);
+        }
         //#region
         //public UpdateInformation BQ_RequestUpdateApp()
         //{

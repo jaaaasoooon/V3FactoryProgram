@@ -90,6 +90,8 @@ namespace BoqiangH5
         public event DelegateBoqiangH5 RaiseReadDdFeedbackEvent;//读取滴滴反馈信息
         public event DelegateBoqiangH5 RaiseSettingBrakeStatusEvent;
 
+        public event DelegateBoqiangH5 RaiseReadBqFlashEvent;
+
         private static readonly object m_lock = new object();
 
         private void HandlerZLGRecvDataEvent(object sender, EventArgs e)
@@ -275,6 +277,9 @@ namespace BoqiangH5
                                     break;
                                 case 0xB9:
                                     OnRaiseReadBqBootInfoEvent(recvEvent);
+                                    break;
+                                case 0xBA:
+                                    OnRaiseReadFlashInfoEvent(recvEvent);
                                     break;
                             }
                         }
@@ -639,6 +644,8 @@ namespace BoqiangH5
             RaiseAdjustOutResistanceEvent += ucAdjustWnd.HandleRecvAdjustOutResistanceEvent;
             RaiseSettingBrakeStatusEvent += ucDdBmsInfoWnd.HandleRecvSettingBrakeStatusEvent;
             RaiseReadDdFeedbackEvent += ucDdBmsInfoWnd.HandleRecvDDFeedbackInfoEvent;
+
+            RaiseReadBqFlashEvent += ucBqBmsInfoWnd.HandleRecvBqFlashInfoEvent;
         }
 
         public void HandleRaiseMenuBreakEvent(object sender, EventArgs e)
@@ -1188,6 +1195,16 @@ namespace BoqiangH5
         public virtual void OnRaiseSettingBrakeStatus(CustomRecvDataEventArgs e)
         {
             DelegateBoqiangH5 handler = RaiseSettingBrakeStatusEvent;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        public virtual void OnRaiseReadFlashInfoEvent(CustomRecvDataEventArgs e)
+        {
+            DelegateBoqiangH5 handler = RaiseReadBqFlashEvent;
+
             if (handler != null)
             {
                 handler(this, e);
