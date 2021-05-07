@@ -287,7 +287,7 @@
                 <ColumnDefinition Width="Auto"/>
 
             </Grid.ColumnDefinitions>
-            <Label Name="labVersion" Content="版本号：V21.03.12.01" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,2" FontSize="12" Foreground="White" Grid.Column="0"/>
+            <Label Name="labVersion" Content="版本号：V21.05.07.01" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,2" FontSize="12" Foreground="White" Grid.Column="0"/>
             <Ellipse Grid.Column="3" Width="20" Height="20" Stroke="Silver" StrokeThickness="3" Margin="5">
                 <Ellipse.Fill>
                     
