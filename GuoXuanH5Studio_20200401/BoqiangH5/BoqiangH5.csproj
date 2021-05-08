@@ -151,6 +151,9 @@
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="OneClickFactorySetting.cs" />
+    <Compile Include="RemoveBindingWnd.xaml.cs">
+      <DependentUpon>RemoveBindingWnd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RequestFrameTestWnd.xaml.cs">
       <DependentUpon>RequestFrameTestWnd.xaml</DependentUpon>
     </Compile>
@@ -271,6 +274,10 @@
     <Page Include="OneClickFactorySetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RemoveBindingWnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RequestFrameTestWnd.xaml">
       <SubType>Designer</SubType>

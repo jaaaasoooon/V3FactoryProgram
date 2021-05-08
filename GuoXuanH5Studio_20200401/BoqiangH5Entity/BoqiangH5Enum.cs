@@ -35,7 +35,8 @@ namespace BoqiangH5Entity
         BMS绑定 = 18,
         总压校准 = 19,
         进水阻抗校准 = 20,
-        保护参数写入 = 21
+        保护参数写入 = 21,
+        BMS解绑 = 22
     }
 
     public enum OperationResultEnum

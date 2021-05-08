@@ -177,20 +177,7 @@ namespace BoqiangH5
                             var item = eb12.uidrecord.FirstOrDefault(p => p.UID == U_ID);
                             if (!string.IsNullOrEmpty(item.BMSID))
                             {
-                                if (MessageBoxResult.Yes == MessageBox.Show(string.Format("该BMS已绑定ID {0}，是否更改绑定？", item.BMSID), "提示", MessageBoxButton.YesNo, MessageBoxImage.Information))
-                                {
-                                    //做权限管理
-                                    VerifyWnd wnd = new VerifyWnd();
-                                    wnd.ShowDialog();
-                                    if (wnd.isOK == false)
-                                    {
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    return;
-                                }
+                                MessageBox.Show(string.Format("该BMS已绑定ID {0}", item.BMSID), "提示", MessageBoxButton.OK , MessageBoxImage.Information);
                             }
                             else
                             {
@@ -200,7 +187,10 @@ namespace BoqiangH5
                                 }
                             }
                         }
-
+                        break;
+                    case OperationTypeEnum.BMS解绑:
+                        RemoveBindingWnd wnd = new RemoveBindingWnd(U_ID);
+                        wnd.ShowDialog();
                         break;
                     default:
                         BqProtocol.BqInstance.m_bIsStopCommunication = false;
@@ -377,6 +367,7 @@ namespace BoqiangH5
                     btnWriteBMSDevice.IsEnabled = false;
                     btnWritePackDevice.IsEnabled = false;
                     tbSn.IsEnabled = false;
+                    btnRemoveBinding.IsEnabled = false;
                     GetMacOperation(Mac);
                     if (Dic_Mac_Operation.Count > 0)
                     {
@@ -3158,6 +3149,19 @@ namespace BoqiangH5
             }
         }
         #endregion
+
+        private void btnRemoveBinding_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.m_statusBarInfo.IsOnline)
+            {
+                operateType = OperationTypeEnum.BMS解绑;
+                RequireReadUIDEvent?.Invoke(this, new EventArgs<string>("BmsInfo"));
+            }
+            else
+            {
+                ShowMessage("系统未连接，请连接后再进行操作！", false);
+            }
+        }
     }
 
 

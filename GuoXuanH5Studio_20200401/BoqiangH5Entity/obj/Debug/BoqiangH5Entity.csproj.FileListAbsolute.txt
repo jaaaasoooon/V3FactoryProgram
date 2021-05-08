@@ -120,3 +120,9 @@ G:\博强\V3生产程序\EB12_H5工厂生产使用---20200521最新程序\GuoXua
 G:\博强\V3生产程序\EB12_H5工厂生产使用---20200521最新程序\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.csproj.CoreCompileInputs.cache
 G:\博强\V3生产程序\EB12_H5工厂生产使用---20200521最新程序\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.dll
 G:\博强\V3生产程序\EB12_H5工厂生产使用---20200521最新程序\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.pdb
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5Entity\bin\Debug\BoqiangH5Entity.dll
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5Entity\bin\Debug\BoqiangH5Entity.pdb
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.csprojAssemblyReference.cache
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.csproj.CoreCompileInputs.cache
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.dll
+D:\BQ\V3FactoryProgram\GuoXuanH5Studio_20200401\BoqiangH5Entity\obj\Debug\BoqiangH5Entity.pdb

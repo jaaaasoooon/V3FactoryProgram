@@ -355,13 +355,15 @@
                             <Grid Margin="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="10*"/>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="60"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Content="BMS登记"  Grid.Column="0" Width="80" Style="{StaticResource ButtonStyle}" Name="btnBMSRegister" Click="btnBMSRegister_Click" />
-                                <CheckBox Name="cbSimpleMode" Content="精简模式" Grid.Column="2" Width="80" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbSimpleMode_Click" />
-                                <CheckBox Name="cbIsSaveBms" Content="记录" Grid.Column="3" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbIsSaveBms_Click"  />
+                                <Button Content="BMS注册"  Grid.Column="0" Width="80" Style="{StaticResource ButtonStyle}" Name="btnBMSRegister"  Click="btnBMSRegister_Click" />
+                                <Button Content="解除绑定"  Grid.Column="1" Width="80" Style="{StaticResource ButtonStyle}" Name="btnRemoveBinding" Click="btnRemoveBinding_Click"/>
+                                <CheckBox Name="cbSimpleMode" Content="精简模式" Grid.Column="3" Width="80" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbSimpleMode_Click" />
+                                <CheckBox Name="cbIsSaveBms" Content="记录" Grid.Column="4" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="false" Click="cbIsSaveBms_Click"  />
                             </Grid>
                         </Border>
 

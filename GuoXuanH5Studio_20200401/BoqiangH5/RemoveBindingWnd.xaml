@@ -1,0 +1,30 @@
+﻿<Window x:Class="BoqiangH5.RemoveBindingWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BoqiangH5"
+        mc:Ignorable="d"
+        Title="解除绑定" Height="180" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Loaded="Window_Loaded" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="UID：" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"></Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Margin="5" Name="tbUID" Height="30" IsReadOnly="True"></TextBox>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="BMSID：" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"></Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Margin="5" Name="tbBMSID" Height="30" IsReadOnly="True"></TextBox>
+
+        <!--<Button Grid.Column="1" Grid.Row="2" Content="查询" Margin="5" Height="30" Width="80" HorizontalAlignment="Left" Name="btnQuery" Click="btnQuery_Click"></Button>-->
+        <Button Grid.Column="2" Grid.Row="2" Content="解绑" Margin="5" Height="30" Width="80" HorizontalAlignment="Right" Name="btnRemoveBanding" Click="btnRemoveBanding_Click"></Button>
+    </Grid>
+</Window>
