@@ -75,7 +75,7 @@
                     </Ellipse>
                 </Grid>-->
                 <Button Content="充放电测试" Grid.Row="1" Grid.Column="3" Style="{StaticResource ButtonStyle}" Name="btnChargeOrDischarge" Width="80" Click="btnChargeOrDischarge_Click"/>
-                <RichTextBox Grid.Column="6"  Grid.RowSpan="2" Margin="5" Name="rtbMsg" VerticalScrollBarVisibility="Auto"  IsReadOnly="True" >
+                <RichTextBox Grid.Column="6"  Grid.RowSpan="2" Margin="5" Name="rtbMsg" VerticalScrollBarVisibility="Auto"  IsReadOnly="True"  >
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0"/>
