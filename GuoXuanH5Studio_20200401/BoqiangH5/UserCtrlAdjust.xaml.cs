@@ -424,12 +424,12 @@ namespace BoqiangH5
                 }
                 else if(isAdjustLoadVoltage)
                 {
-                    uint voltage = uint.Parse(tbLoadVoltage.Text.Trim());
+                    uint voltage = uint.Parse(tbAdjustLoadVoltage.Text.Trim());
                     BqProtocol.BqInstance.BQ_AdjustLoadVoltageParam(voltage);
                 }
                 else if(isAdjustBatteryVoltage)
                 {
-                    uint voltage = uint.Parse(tbBatteryVoltage.Text.Trim());
+                    uint voltage = uint.Parse(tbAdjustBatteryVoltage.Text.Trim());
                     BqProtocol.BqInstance.BQ_AdjustBatteryVoltageParam(voltage);
                 }
                 else if(isAdjustOutResistance)
@@ -445,7 +445,7 @@ namespace BoqiangH5
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         public event EventHandler<EventArgs<string>> RequireReadUIDEvent;
